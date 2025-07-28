@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TDD Testing - Sum Function</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+      }
+
+      .header p {
+        font-size: 1.2em;
+        opacity: 0.9;
+      }
+
+      .content {
+        padding: 30px;
+      }
+
+      .section {
+        margin-bottom: 40px;
+        background: #f8f9fa;
+        padding: 25px;
+        border-radius: 10px;
+        border-left: 5px solid #667eea;
+      }
+
+      .section h2 {
+        color: #2c3e50;
+        margin-bottom: 20px;
+        font-size: 1.8em;
+      }
+
+      .code-block {
+        background: #2d3748;
+        color: #e2e8f0;
+        padding: 20px;
+        border-radius: 8px;
+        font-family: "Courier New", monospace;
+        margin: 15px 0;
+        overflow-x: auto;
+      }
+
+      .test-runner {
+        background: #e8f5e8;
+        padding: 25px;
+        border-radius: 10px;
+        border: 2px solid #28a745;
+      }
+
+      .calculator {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: 20px 0;
+      }
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .input-group label {
+        font-weight: bold;
+        color: #2c3e50;
+      }
+
+      .input-group input {
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 100px;
+      }
+
+      .input-group input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+      }
+
+      .calculate-btn {
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background 0.3s;
+      }
+
+      .calculate-btn:hover {
+        background: #5a6fd8;
+      }
+
+      .result {
+        font-size: 18px;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-left: 15px;
+      }
+
+      .test-results {
+        margin-top: 20px;
+      }
+
+      .test-case {
+        background: white;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 8px;
+        border-left: 5px solid #28a745;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .test-case.failed {
+        border-left-color: #dc3545;
+        background: #fdf2f2;
+      }
+
+      .test-status {
+        font-weight: bold;
+        padding: 5px 12px;
+        border-radius: 15px;
+        color: white;
+      }
+
+      .test-status.passed {
+        background: #28a745;
+      }
+
+      .test-status.failed {
+        background: #dc3545;
+      }
+
+      .run-tests-btn {
+        background: #28a745;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        transition: background 0.3s;
+      }
+
+      .run-tests-btn:hover {
+        background: #218838;
+      }
+
+      @media (max-width: 768px) {
+        .calculator {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .input-group {
+          align-items: center;
+        }
+
+        .input-group input {
+          width: 200px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🧮 TDD Testing Project</h1>
+        <p>Test-Driven Development med Sum-funksjon</p>
+      </div>
+
+      <div class="content">
+        <!-- Sum Function Section -->
+        <div class="section">
+          <h2>📝 Sum-funksjonen</h2>
+          <p>
+            Her er den enkle sum-funksjonen som ble utviklet med TDD-metodikk:
+          </p>
+          <div class="code-block">
+            function sum(a, b) { return a + b; } module.exports = sum;
+          </div>
+        </div>
+
+        <!-- Interactive Calculator -->
+        <div class="section">
+          <h2>🧮 Test Kalkulatoren</h2>
+          <p>Prøv sum-funksjonen interaktivt:</p>
+          <div class="calculator">
+            <div class="input-group">
+              <label>Tall A:</label>
+              <input type="number" id="numA" value="1" />
+            </div>
+            <div class="input-group">
+              <label>Tall B:</label>
+              <input type="number" id="numB" value="2" />
+            </div>
+            <button class="calculate-btn" onclick="calculate()">
+              Beregn Sum
+            </button>
+            <div class="result" id="result">Resultat: 3</div>
+          </div>
+        </div>
+
+        <!-- Test Cases -->
+        <div class="section">
+          <h2>🧪 Jest Test Cases</h2>
+          <p>Disse testene sikrer at sum-funksjonen fungerer korrekt:</p>
+          <div class="code-block">
+            const sum = require("./sum"); test("legger sammen 1 + 2 for å bli
+            3", () => { expect(sum(1, 2)).toBe(3); }); test("legger sammen to
+            negative tall", () => { expect(sum(-1, -2)).toBe(-3); });
+            test("legger sammen positivt og negativt tall", () => {
+            expect(sum(5, -3)).toBe(2); });
+          </div>
+        </div>
+
+        <!-- Test Runner -->
+        <div class="test-runner">
+          <h2>🚀 Kjør Testene</h2>
+          <p>Klikk for å simulere Jest-testene:</p>
+          <button class="run-tests-btn" onclick="runTests()">
+            Kjør Alle Tester
+          </button>
+          <div class="test-results" id="testResults"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Sum function (same as in sum.js)
+      function sum(a, b) {
+        return a + b;
+      }
+
+      // Interactive calculator
+      function calculate() {
+        const a = parseFloat(document.getElementById("numA").value) || 0;
+        const b = parseFloat(document.getElementById("numB").value) || 0;
+        const result = sum(a, b);
+        document.getElementById("result").textContent = `Resultat: ${result}`;
+      }
+
+      // Test runner simulation
+      function runTests() {
+        const testCases = [
+          {
+            description: "legger sammen 1 + 2 for å bli 3",
+            test: () => sum(1, 2) === 3,
+          },
+          {
+            description: "legger sammen to negative tall",
+            test: () => sum(-1, -2) === -3,
+          },
+          {
+            description: "legger sammen positivt og negativt tall",
+            test: () => sum(5, -3) === 2,
+          },
+        ];
+
+        const resultsDiv = document.getElementById("testResults");
+        resultsDiv.innerHTML = "";
+
+        let passedCount = 0;
+        testCases.forEach((testCase, index) => {
+          const passed = testCase.test();
+          if (passed) passedCount++;
+
+          const testDiv = document.createElement("div");
+          testDiv.className = `test-case ${passed ? "passed" : "failed"}`;
+          testDiv.innerHTML = `
+                    <span>${testCase.description}</span>
+                    <span class="test-status ${passed ? "passed" : "failed"}">
+                        ${passed ? "✅ PASSED" : "❌ FAILED"}
+                    </span>
+                `;
+          resultsDiv.appendChild(testDiv);
+        });
+
+        // Add summary
+        const summaryDiv = document.createElement("div");
+        summaryDiv.style.marginTop = "20px";
+        summaryDiv.style.padding = "15px";
+        summaryDiv.style.background =
+          passedCount === testCases.length ? "#d4edda" : "#f8d7da";
+        summaryDiv.style.borderRadius = "8px";
+        summaryDiv.style.fontWeight = "bold";
+        summaryDiv.textContent = `${passedCount}/${testCases.length} tester bestått`;
+        resultsDiv.appendChild(summaryDiv);
+      }
+
+      // Initialize calculator
+      calculate();
+    </script>
+  </body>
+</html>
