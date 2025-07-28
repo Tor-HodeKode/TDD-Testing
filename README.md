@@ -4,7 +4,7 @@ Et interaktivt Test-Driven Development (TDD) prosjekt som demonstrerer testing m
 
 ## 🌐 Live Demo
 
-Besøk den live versjonen: [https://dittbrukernavn.github.io/TDD-Testing](https://dittbrukernavn.github.io/TDD-Testing)
+Besøk den live versjonen: [https://dittbrukernavn.github.io/TDD-Testing](https://Tor-HodeKode.github.io/TDD-Testing)
 
 ## 📝 Om Prosjektet
 
